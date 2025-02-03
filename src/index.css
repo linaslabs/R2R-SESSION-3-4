@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@800;600");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  background-color: #121213;
+  color: rgb(248, 248, 248);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Libre Franklin", sans-serif;
+  text-transform: uppercase;
+}
+
+/* Wordle component styles */
+.wordle__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.wordle__container:focus {
+  outline: none;
+}
+
+.wordle__title {
+  text-transform: capitalize;
+}
+
+.wordle__notification {
+  text-align: center;
+  height: 16px;
+  margin: 16px;
+  color: salmon;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* Row component styles */
+.row__container {
+  display: flex;
+  gap: 5px;
+  font-weight: 800;
+  font-size: 32px;
+}
+
+.letter__container {
+  width: 60px;
+  height: 60px;
+  background-color: #121213;
+  border: 2px solid rgb(58, 58, 60);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.letter__back {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotateX(180deg);
+  backface-visibility: hidden;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate3d(1, 0, 0, 0deg);
+  }
+  100% {
+    transform: rotate3d(1, 0, 0, 180deg);
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(6px);
+  }
+  100% {
+    transform: translateX(-6px);
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .letter__container {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Key component styles */
+/* Keyboard component styles */
