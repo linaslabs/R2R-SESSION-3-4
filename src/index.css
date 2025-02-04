@@ -121,5 +121,74 @@ body {
   }
 }
 
-/* Key component styles */
 /* Keyboard component styles */
+.keyboard__container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 32px;
+  font-size: 20px;
+}
+
+.keyboard__row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+button {
+  all: unset;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.key {
+  width: 40px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #818384;
+  font-weight: 600;
+  transition: background-color 0.3s linear;
+}
+
+.key__absent {
+  background-color: #3a3a3c;
+}
+
+.key__present {
+  background-color: #b59f3b;
+}
+
+.key__correct {
+  background-color: #538d4e;
+}
+
+.enter, .backspace {
+  width: 60px;
+  font-size: 12px;
+}
+
+@media only screen and (max-width: 700px) {
+  .keyboard {
+    font-size: 16px;
+    gap: 6px
+  }
+
+  .keyboard__row {
+    gap: 4px;
+  }
+
+  .key {
+    width: 30px;
+    height: 40px;
+  }
+
+  .enter, .backspace {
+    width: 60px;
+    font-size: 12px;
+  }
+}
