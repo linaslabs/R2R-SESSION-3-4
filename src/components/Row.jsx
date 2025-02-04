@@ -1,4 +1,8 @@
-export default function Row({ word }) {
+export default function Row({ 
+    word,
+    solution,
+    bounceOnError
+}) {
     const renderedLetters = word.split("").map((letter, index) => (
         <div key={index} className="letter__container">
             {letter}
