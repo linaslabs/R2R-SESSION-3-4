@@ -43,6 +43,10 @@ body {
   font-size: 20px;
 }
 
+.wordle__notification__green {
+  color: #538d4e;
+}
+
 /* Row component styles */
 .row__container {
   display: flex;
@@ -73,6 +77,43 @@ body {
   align-items: center;
   transform: rotateX(180deg);
   backface-visibility: hidden;
+}
+
+.active {
+  border-color: rgb(86, 87, 88);
+  animation: 0.1s linear scale;
+}
+
+.absent .letter__back {
+  background-color: #3a3a3c;
+}
+
+.present .letter__back {
+  background-color: #b59f3b;
+}
+
+.correct .letter__back  {
+  background-color: #538d4e;
+}
+
+.rotate--100 {
+  animation: 0.5s linear 0.1s rotate forwards;  
+}
+
+.rotate--200 {
+  animation: 0.5s linear 0.2s rotate forwards;
+}
+
+.rotate--300 {
+  animation: 0.5s linear 0.3s rotate forwards;  
+}
+
+.rotate--400 {
+  animation: 0.5s linear 0.4s rotate forwards;  
+}
+
+.rotate--500 {
+  animation: 0.5s linear 0.5s rotate forwards;  
 }
 
 @keyframes rotate {
@@ -153,18 +194,7 @@ button:hover {
   background-color: #818384;
   font-weight: 600;
   transition: background-color 0.3s linear;
-}
-
-.key__absent {
-  background-color: #3a3a3c;
-}
-
-.key__present {
-  background-color: #b59f3b;
-}
-
-.key__correct {
-  background-color: #538d4e;
+  border-radius: 6px;
 }
 
 .enter, .backspace {

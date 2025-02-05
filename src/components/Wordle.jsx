@@ -11,7 +11,7 @@ import {
 } from "../data/lettersAndWords";
 
 // hardcoded solution
-const SOLUTION = "table";
+const SOLUTION = "react";
 
 // randomised solution
 // const SOLUTION = WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -25,10 +25,11 @@ export default function Wordle() {
         "     ",
         "     ",
     ]);
+    const [solutionFound, setSolutionFound] = useState(false);
     const [activeLetterIndex, setActiveLetterIndex] = useState(0);
     const [activeRowIndex, setActiveRowIndex] = useState(0);
+    const [failedGuesses, setFailedGuesses] = useState([]);
     const [notification, setNotification] = useState("");
-    const solutionFound = false; // can use useState
     const [correctLetters, setCorrectLetters] = useState([]);
     const [presentLetters, setPresentLetters] = useState([]);
     const [absentLetters, setAbsentLetters] = useState([]);
@@ -37,15 +38,20 @@ export default function Wordle() {
 
     useEffect(() => {
         worldRef.current.focus();
+
+        // use handlekeydown instead?
+        // window.addEventListener("keydown", handleKeyDown)
+
+        // return () => window.removeEventListener("keydown", handleKeyDown);
         
     }, []);
 
     const typeLetter = (letter) => {
-        // at 5th letter...
         if(activeLetterIndex < 5) {
             setNotification("");
 
-            let newGuesses = [...guesses];
+            // creating a new array as mutating it directly won't trigger the state update
+            const newGuesses = [...guesses];
             newGuesses[activeRowIndex] = replaceCharacter(newGuesses[activeRowIndex], activeLetterIndex, letter);
 
             setGuesses(newGuesses);
@@ -58,6 +64,7 @@ export default function Wordle() {
     }
 
     const hitEnter = () => {
+        // check all 5 characters have been input
         if(activeLetterIndex === 5) {
             const currentGuess = guesses[activeRowIndex];
 
@@ -65,15 +72,49 @@ export default function Wordle() {
             if(!WORDS.includes(currentGuess)) {
                 setNotification("WORD INVALID");
 
+            // word already tried
+            } else if(failedGuesses.includes(currentGuess)) {
+                setNotification("WORD TRIED ALREADY");
+
             // guess is correct
             } else if(currentGuess === SOLUTION) {
-                setSolution
+                setSolutionFound(true);
                 setNotification("WELL DONE!");
+                setCorrectLetters([...SOLUTION]);
 
             // partial guess
             } else {
-                
+                const correctLetters = [];
+
+                [...currentGuess].forEach((letter, index) => {
+                    if(SOLUTION[index] === letter) {
+                        correctLetters.push(letter);
+                    }
+                });
+
+                setCorrectLetters([...new Set(correctLetters)]);
+
+                setPresentLetters([
+                    ...new Set([
+                        ...presentLetters,
+                        ...[...currentGuess].filter(letter => SOLUTION.includes(letter))
+                    ])
+                ]);
+
+                setAbsentLetters([
+                    ...new Set([
+                        ...absentLetters,
+                        ...[...currentGuess].filter(letter => !SOLUTION.includes(letter))
+                    ])
+                ]);
+
+                setFailedGuesses([...failedGuesses, currentGuess]);
+                setActiveRowIndex(index => index + 1);
+                setActiveLetterIndex(0);
             }
+
+        } else {
+            setNotification("FIVE LETTER WORDS ONLY");
         }
     }
 
@@ -100,15 +141,11 @@ export default function Wordle() {
 
         if(LETTERS.includes(e.key)) {
             typeLetter(e.key);
-            return;
-        }
 
-        if(e.key === "Enter") {
+        } else if(e.key === "Enter") {
             hitEnter();
-            return;
-        }
 
-        if(e.key === "Backspace") {
+        } else if (e.key === "Backspace") {
             hitBackspace();
         }
     }
@@ -122,10 +159,18 @@ export default function Wordle() {
             onKeyDown={handleKeyDown}
         >
             <h1 className="wordle__title">Ultimate Worlde</h1>
-            <div className="wordle__notification"></div>
-            {guesses.map((guess, index) => {
-                return <Row key={index} word={guess}/>
-            })}
+            <div className={`
+                wordle__notification 
+                ${solutionFound && "wordle__notification__green"}`
+            }>{notification}</div>
+            {guesses.map((guess, index) => (
+                <Row 
+                    key={index} 
+                    word={guess}
+                    applyRotation={activeRowIndex > index || (solutionFound && activeRowIndex === index)}
+                    solution={SOLUTION}
+                />
+            ))}
             <Keyboard 
                 presentLetters={presentLetters} 
                 correctLetters={correctLetters} 
