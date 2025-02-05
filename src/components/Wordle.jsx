@@ -1,7 +1,6 @@
 import { 
     useState,
     useEffect,
-    useRef
 } from "react";
 import Row from "./Row";
 import Keyboard from "./Keyboard";
@@ -34,17 +33,13 @@ export default function Wordle() {
     const [presentLetters, setPresentLetters] = useState([]);
     const [absentLetters, setAbsentLetters] = useState([]);
 
-    const worldRef = useRef();
-
     useEffect(() => {
-        worldRef.current.focus();
+        window.addEventListener("keydown", handleKeyDown)
 
-        // use handlekeydown instead?
-        // window.addEventListener("keydown", handleKeyDown)
-
-        // return () => window.removeEventListener("keydown", handleKeyDown);
+        // cleanup function
+        return () => window.removeEventListener("keydown", handleKeyDown);
         
-    }, []);
+    }, [activeLetterIndex]);
 
     const typeLetter = (letter) => {
         if(activeLetterIndex < 5) {
@@ -151,13 +146,7 @@ export default function Wordle() {
     }
 
     return (
-        <div 
-            className="wordle__container"
-            ref={worldRef}
-            tabIndex="0"
-            onBlur={(e) => e.target.focus()}
-            onKeyDown={handleKeyDown}
-        >
+        <div className="wordle__container">
             <h1 className="wordle__title">Ultimate Worlde</h1>
             <div className={`
                 wordle__notification 
