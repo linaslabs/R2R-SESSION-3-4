@@ -2,7 +2,7 @@ import Wordle from "./components/Wordle"
 
 function App() {
   return (
-    <div className="">
+    <div>
       <Wordle/>
     </div>
   )

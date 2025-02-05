@@ -1,7 +1,6 @@
 import { 
     useState,
-    useEffect,
-    useRef
+    useEffect
 } from "react";
 import Row from "./Row";
 import Keyboard from "./Keyboard";

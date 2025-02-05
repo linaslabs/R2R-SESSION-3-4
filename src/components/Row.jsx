@@ -1,7 +1,7 @@
 export default function Row({ 
-    word,
-    solution,
-    bounceOnError
+    word, 
+    applyRotation, 
+    solution
 }) {
     return (
         <></>
