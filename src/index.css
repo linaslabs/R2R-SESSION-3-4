@@ -197,6 +197,14 @@ button:hover {
   border-radius: 6px;
 }
 
+.key__absent {
+  background-color: #3a3a3c;
+}
+
+.key__correct {
+  background-color: #538d4e;
+}
+
 .enter, .backspace {
   width: 60px;
   font-size: 12px;

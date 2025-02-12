@@ -9,13 +9,7 @@ import {
     WORDS 
 } from "../data/lettersAndWords";
 
-// hardcoded solution
-const SOLUTION = "react";
-
-// randomised solution
-// const SOLUTION = WORDS[Math.floor(Math.random() * WORDS.length)];
-
-export default function Wordle() {
+export default function Wordle({ solution }) {
     const [guesses, setGuesses] = useState([
         "     ",
         "     ",
@@ -33,6 +27,8 @@ export default function Wordle() {
     const [presentLetters, setPresentLetters] = useState([]);
     const [absentLetters, setAbsentLetters] = useState([]);
 
+    const SOLUTION = solution;
+
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown)
 
@@ -40,7 +36,7 @@ export default function Wordle() {
         return () => window.removeEventListener("keydown", handleKeyDown);
         
     }, [activeLetterIndex]);
-
+    
     const typeLetter = (letter) => {
         if(activeLetterIndex < 5) {
             setNotification("");

@@ -7,9 +7,8 @@ export default function Key({
 }) {
     return (
         <button
-            className={`key 
+            className={`key
                 ${isAbsent && "key__absent"} 
-                ${isPresent && "key__present"} 
                 ${isCorrect && "key__correct"}`
             }
             onClick={() => typeLetter(letter)}
