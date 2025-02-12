@@ -201,6 +201,10 @@ button:hover {
   background-color: #3a3a3c;
 }
 
+.key__present {
+  background-color: #538d4e;
+}
+
 .key__correct {
   background-color: #538d4e;
 }
